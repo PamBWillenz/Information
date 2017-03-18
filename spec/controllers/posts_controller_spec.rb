@@ -11,6 +11,8 @@ RSpec.describe PostsController, type: :controller do
   describe "posts#new action" do 
     it "should successfully show the new form" do 
       user = User.create(
+        first_name:             'Tom',
+        last_name:              'Jones',
         email:                  'fakeuser@gmail.com',
         password:               'secretPassword',
         password_confirmation:  'secretPassword'
@@ -25,6 +27,8 @@ RSpec.describe PostsController, type: :controller do
   describe "posts#create action" do 
     it "should successfully create a new post in our database" do 
       user = User.create(
+        first_name:             'Tom',
+        last_name:              'Jones',
         email:                  'fakeuser@gmail.com',
         password:               'secretPassword',
         password_confirmation:  'secretPassword'
@@ -41,16 +45,18 @@ RSpec.describe PostsController, type: :controller do
 
     it "should handle validation errors" do 
       user = User.create(
+        first_name:             'Tom',
+        last_name:              'Jones',
         email:                  'fakeuser@gmail.com',
         password:               'secretPassword',
         password_confirmation:  'secretPassword'
       )
       sign_in user
-
+      
       post_count = Post.count
       post :create, post: {title: ''}
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(post.count).to eq Post.count
+      expect(post_count).to eq Post.count
     end
   end
 end
