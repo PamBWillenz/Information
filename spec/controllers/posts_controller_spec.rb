@@ -10,13 +10,8 @@ RSpec.describe PostsController, type: :controller do
 
   describe "posts#new action" do 
     it "should successfully show the new form" do 
-      user = User.create(
-        first_name:             'Tom',
-        last_name:              'Jones',
-        email:                  'fakeuser@gmail.com',
-        password:               'secretPassword',
-        password_confirmation:  'secretPassword'
-      )
+      user = FactoryGirl.create(:user)
+      
       sign_in user
 
       get :new
@@ -26,13 +21,8 @@ RSpec.describe PostsController, type: :controller do
 
   describe "posts#create action" do 
     it "should successfully create a new post in our database" do 
-      user = User.create(
-        first_name:             'Tom',
-        last_name:              'Jones',
-        email:                  'fakeuser@gmail.com',
-        password:               'secretPassword',
-        password_confirmation:  'secretPassword'
-      )
+      user = FactoryGirl.create(:user)
+      
       sign_in user
 
       post :create, post: {title: 'Hello!'}
@@ -44,13 +34,8 @@ RSpec.describe PostsController, type: :controller do
     end
 
     it "should handle validation errors" do 
-      user = User.create(
-        first_name:             'Tom',
-        last_name:              'Jones',
-        email:                  'fakeuser@gmail.com',
-        password:               'secretPassword',
-        password_confirmation:  'secretPassword'
-      )
+      user = FactoryGirl.create(:user)
+      
       sign_in user
       
       post_count = Post.count
