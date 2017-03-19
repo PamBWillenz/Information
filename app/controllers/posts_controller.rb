@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
   end
@@ -24,11 +25,13 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find_by_id(params[:id])
     return render_not_found if @post.blank?
+    return render_not_found(:forbidden) if @post.user != current_user
   end
 
   def update
     @post = Post.find_by_id(params[:id])
     return render_not_found if @post.blank?
+    return render_not_found(:forbidden) if @post.user != current_user
 
     @post.update_attributes(post_params)
 
@@ -42,6 +45,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find_by_id(params[:id])
     return render_not_found if @post.blank?
+    return render_not_found(:forbidden) if @post.user != current_user
     @post.destroy
     redirect_to root_path
   end
@@ -52,7 +56,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :message)
   end
 
-  def render_not_found
-    render text: 'Not Found', status: :not_found 
+  def render_not_found(status=:not_found)
+    render text: "#{status.to_s.titleize}", status: status 
   end
 end
