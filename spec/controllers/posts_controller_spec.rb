@@ -1,6 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do 
+  
+  describe "posts#update action" do 
+    it "should allow users to successfully update posts" do 
+      post = FactoryGirl.create(:post, title: "Initial Value")
+      patch :update, id: post.id, post: { title: 'Changed'}
+      expect(response).to redirect_to root_path
+      post.reload
+      expect(post.title).to eq "Changed"
+    end
+
+    it "should have http 404 error if post cannot be found" do 
+      patch :update, id: "CYCLE", post: { title: 'Changed'}
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "should render the edit form with an http status of unprocessable_entity" do 
+      post = FactoryGirl.create(:post, title: "Initial Value")
+      patch :update, id: post.id, post: { title: ''}
+      expect(response).to have_http_status(:unprocessable_entity)
+      post.reload
+      expect(post.title).to eq "Initial Value"
+    end
+  end
+
+  describe "posts#edit action" do 
+    it "should successfully show the edit form if the gram is found" do 
+      post = FactoryGirl.create(:post)
+      get :edit, id: post.id
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should return a 404 error message if the post is not found" do 
+      get :edit, id: 'TUGBOAT'
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   describe "posts#show action" do 
     it "should successfully show the page if the post is found" do 
       post = FactoryGirl.create(:post)
