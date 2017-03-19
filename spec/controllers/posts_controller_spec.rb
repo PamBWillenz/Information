@@ -3,27 +3,27 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :controller do 
   
   describe "posts#destroy action" do 
-    it "shouldn't let a user who did not create the post destory it" do 
-      post = FactoryGirl.create(:post)
+    it "shouldn't allow users who did not create the post destroy it" do 
+      p = FactoryGirl.create(:post)
       user = FactoryGirl.create(:user)
       sign_in user
-      delete :destroy, id: post.id
+      delete :destroy, id: p.id
       expect(response).to have_http_status(:forbidden)
     end
 
     it "shouldn't let unauthenticated users destroy a post" do 
-      post = FactoryGirl.create(:post)
-      delete :destroy, id: post.id
+      p = FactoryGirl.create(:post)
+      delete :destroy, id: p.id
       expect(response).to redirect_to new_user_session_path
     end
 
     it "should allow a user to destroy a post" do 
-      post = FactoryGirl.create(:post)
-      sign_in post.user
-      delete :destroy, id: post.id
+      p = FactoryGirl.create(:post)
+      sign_in p.user
+      delete :destroy, id: p.id
       expect(response).to redirect_to root_path
-      post = Post.find_by_id(post.id)
-      expect(post).to eq nil
+      p = Post.find_by_id(p.id)
+      expect(p).to eq nil
     end
 
     it "should return a 404 message if there is no post with that id" do 
@@ -35,27 +35,27 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe "posts#update action" do 
-    it "shouldn't let a user who did not create the post update it" do 
-      post = FactoryGirl.create(:post)
+    it "shouldn't let users who did not create the post update it" do 
+      p = FactoryGirl.create(:post)
       user = FactoryGirl.create(:user)
       sign_in user
-      patch :update, id: post.id, post: {title: 'Kirrrrk'}
+      patch :update, id: p.id, post: {title: 'Kirrrrk'}
       expect(response).to have_http_status(:forbidden)
     end
 
     it "shouldn't let unauthenticated users update a post" do 
-      post = FactoryGirl.create(:post)
-      patch :update, id: post.id, post: { title: "Hello"}
+      p = FactoryGirl.create(:post)
+      patch :update, id: p.id, post: { title: "Hello"}
       expect(response).to redirect_to new_user_session_path
     end
 
     it "should allow users to successfully update posts" do 
-      post = FactoryGirl.create(:post, title: "Initial Value")
-      sign_in post.user
-      patch :update, id: post.id, post: { title: 'Changed'}
+      p = FactoryGirl.create(:post, title: "Initial Value")
+      sign_in p.user
+      patch :update, id: p.id, post: { title: 'Changed'}
       expect(response).to redirect_to root_path
-      post.reload
-      expect(post.title).to eq "Changed"
+      p.reload
+      expect(p.title).to eq "Changed"
     end
 
     it "should have http 404 error if post cannot be found" do 
@@ -67,36 +67,36 @@ RSpec.describe PostsController, type: :controller do
     end
 
     it "should render the edit form with an http status of unprocessable_entity" do 
-      post = FactoryGirl.create(:post, title: "Initial Value")
-      sign_in post.user
+      p = FactoryGirl.create(:post, title: "Initial Value")
+      sign_in p.user
 
-      patch :update, id: post.id, post: { title: ''}
+      patch :update, id: p.id, post: { title: ''}
       expect(response).to have_http_status(:unprocessable_entity)
-      post.reload
-      expect(post.title).to eq "Initial Value"
+      p.reload
+      expect(p.title).to eq "Initial Value"
     end
   end
 
   describe "posts#edit action" do 
     it "shouldn't let a user who did not create the post edit the post" do 
-      post = FactoryGirl.create(:post)
+      p = FactoryGirl.create(:post)
       user = FactoryGirl.create(:user)
       sign_in user
-      get :edit, id: post.id
+      get :edit, id: p.id
       expect(response).to have_http_status(:forbidden)
     end
 
     it "shouldn't let unauthenticated users edit a post" do 
-      post = FactoryGirl.create(:post)
-      get :edit, id: post.id
+      p = FactoryGirl.create(:post)
+      get :edit, id: p.id
       expect(response).to redirect_to new_user_session_path
     end
 
     it "should successfully show the edit form if the gram is found" do 
-      post = FactoryGirl.create(:post)
-      sign_in post.user
+      p = FactoryGirl.create(:post)
+      sign_in p.user
 
-      get :edit, id: post.id
+      get :edit, id: p.id
       expect(response).to have_http_status(:success)
     end
 
@@ -111,8 +111,8 @@ RSpec.describe PostsController, type: :controller do
 
   describe "posts#show action" do 
     it "should successfully show the page if the post is found" do 
-      post = FactoryGirl.create(:post)
-      get :show, id: post.id
+      p = FactoryGirl.create(:post)
+      get :show, id: p.id
       expect(response).to have_http_status(:success)
     end
 
@@ -130,9 +130,13 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe "posts#new action" do 
+    it "should require users to logged in" do 
+      get :new
+      expect(response).to redirect_to new_user_session_path
+    end
+
     it "should successfully show the new form" do 
       user = FactoryGirl.create(:user)
-      
       sign_in user
 
       get :new
@@ -141,12 +145,17 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe "posts#create action" do 
+    it "should require users to be logged in" do 
+      post :create, post: { title: "Hello"}
+      expect(response).to redirect_to new_user_session_path
+    end
+
     it "should successfully create a new post in our database" do 
       user = FactoryGirl.create(:user)
-      
       sign_in user
 
-      post :create, post: {title: 'Hello!'}
+      post :create, post: {title: 'Hello!',
+        message: 'Really'}
       expect(response).to redirect_to root_path
 
       post = Post.last
@@ -156,7 +165,6 @@ RSpec.describe PostsController, type: :controller do
 
     it "should handle validation errors" do 
       user = FactoryGirl.create(:user)
-      
       sign_in user
       
       post_count = Post.count

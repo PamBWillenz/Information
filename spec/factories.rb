@@ -11,6 +11,7 @@ FactoryGirl.define do
 
   factory :post do 
     title "hello"
+    message "Really"
     association :user
   end
 end
