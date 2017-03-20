@@ -1,12 +1,11 @@
 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 card form">
+  <h2>Edit Post</h2>
   <br />
   <br />
-  <div class="cool-box">    
-
     <%= simple_form_for @post do |f| %>
       <%= f.input :title %>
-      <%= f.submit %>
+       <%= f.input :message %>
+      <%= f.submit 'Update', class: 'my-btn' %>
     <% end %>  
-
-  </div>
 </div>
+

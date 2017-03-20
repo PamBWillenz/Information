@@ -17,3 +17,93 @@ h1, h2, h3, h4, h5, h6 {
   margin:0;
   padding:0;
 }
+
+body {
+  background-color: #fafafa;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.top-nav {
+  background-color: white;
+  border-bottom-color: #edeeee;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  height:70px;
+  padding-top:15px
+}
+
+.top-nav .add a {
+  font-weight: bold;
+  color: #125688;
+  font-size: 16px;
+  padding-left:8px;
+}
+
+.top-nav .add {
+  margin-top:10px;
+}
+
+.brand {
+  color: #125688;
+  font-size: 35px;
+  font-family: 'Noto Sans'
+}
+
+.card {
+  background-color: #fff;
+  border-radius: .25rem;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid #e8e8e8;
+  margin-top: 40px;
+  padding: 0;
+}
+
+.card h3, .card .title .message {
+  font-size: 24px;
+  margin: 20px;
+}
+
+.card.form {
+  padding: 40px;
+}
+
+.handle {
+  margin: 10px;
+  color: #125688;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+label {
+  font-size: 18px;
+}
+
+input {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.my-btn {
+  background-color: #125688;
+  width: 100%;
+  border: none;
+  font-size: 24px;
+  color: white;
+  margin-top: 10px;
+}
+
+.input.boolean {
+  margin-left:18px;
+  margin-top:5px;
+}
+
+.input.boolean label {
+  margin-top:5px;
+  line-height: 44px;
+}
+
+.post-actions a {
+  font-weight: bold;
+  font-size: 16px;
+  margin-right:20px;
+}
