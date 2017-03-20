@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :comments
 
   validates_presence_of :first_name, :last_name
+  validates_presence_of :email
+  validates_presence_of :password
 
   validates :first_name, presence: true, length: {maximum: 30}
   validates :last_name, presence: true, length: {maximum: 30}       
