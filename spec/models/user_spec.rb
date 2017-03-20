@@ -1,26 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do 
-  # describe 'creation' do 
-  #   before do 
-  #     user = User.create(email: "kitty@meow.com", password: "password", password_confirmation: "password", 
-  #       first_name: "Pixel", last_name: "Kitty")
-  #   end
+  describe 'validations' do
+    it "has a valid factory" do
+      expect(FactoryGirl.create(:user)).to be_valid
+    end
 
-  #   it 'should be able to be created if valid' do 
-  #     expect(user.to be_valid)
-  #   end
-  # end
+    it "is valid with valid attributes" do
+      user.first_name = "Jon"
+      user.last_name = "Snow"
+      user.email = "jon@castleblack.com"
+      user.password = "whitewalker"
+      expect(user).to be_valid
+    end
 
-  # describe 'validations' do 
-  #   it 'should not be valid without a first name' do 
-  #     user.first_name = nil
-  #     expect(user).to_not be_valid
-  #   end
+    it "is not valid without a first_name" do 
+      expect(user).to_not be_valid
+    end
 
-  #   it 'should not be valid without a last name' do 
-  #     user.last_name = nil
-  #     expect(user).to_not be_valid
-  #   end
-  # end
+    it "is not valid without a last_name" do
+      expect(user).to_not be_valid
+    end
+  end
 end
