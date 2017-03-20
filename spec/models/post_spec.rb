@@ -14,6 +14,11 @@ RSpec.describe Post, type: :model do
       FactoryGirl.build(:post, message: nil).should_not be_valid 
     end
   end
+
+  describe "associations" do 
+    it { should have_many(:comments) }
+    it { should belong_to(:user) }
+  end
 end
 
 
