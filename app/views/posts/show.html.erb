@@ -12,7 +12,17 @@
   <div class="card">
     <div class="comments">
       <div class="handle"><h2>Comments</h2></div>
-      
+      <% @post.comments.each do |comment| %>
+        <div class="comment">
+          <span class="comment_handle">
+            <%= comment.user.first_name %>
+          </span>
+          <br/>
+
+          <%= comment.message %>
+        </div>
+      <% end %>  
+      <br/><br/>
       <%= simple_form_for Comment.new, url: post_comments_path(@post) do |f| %>
         <%= f.input :message %>
         <%= f.submit 'Add Comment', class: 'my-btn' %>
