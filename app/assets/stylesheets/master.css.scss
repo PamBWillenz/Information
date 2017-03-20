@@ -43,7 +43,7 @@ body {
   margin-top:10px;
 }
 
-.brand {
+.brand a {
   color: #125688;
   font-size: 35px;
   font-family: 'Noto Sans'
@@ -64,6 +64,10 @@ body {
 }
 
 .card.form {
+  padding: 40px;
+}
+
+.card.text-center {
   padding: 40px;
 }
 
