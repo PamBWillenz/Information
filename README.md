@@ -11,7 +11,7 @@ Information is a barebones message board [here](https://information-pam-willenz.
 
 * Ruby 2.3
 
-* Pagination with will_paginate
+* Pagination with will_paginate-bootstrap
 
 * TDD with Rspec and Capybara
 
