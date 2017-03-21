@@ -1,28 +1,19 @@
-== README
+# Information - Kingdom Messages
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### Ruby on Rails framework.
 
-Things you may want to cover:
+Information is a barebones message board [here](https://information-pam-willenz.herokuapp.com/) to share tidbits with friends, family 
 
-* Ruby version
+### Features:
 
-* System dependencies
+* Rails 4.6
 
-* Configuration
+* Ruby 2.3
 
-* Database creation
+* TDD with Rspec
 
-* Database initialization
+* Twitter Bootstrap 3 for CSS and components.
 
-* How to run the test suite
+* PostgreSQL for database queries involving users, posts and comments.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Devise for user forms and security.
