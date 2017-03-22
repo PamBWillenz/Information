@@ -18,7 +18,7 @@
     <div class="add pull-right">    
       <% if current_user %>
         Welcome, <%= current_user.first_name %>
-          <%= link_to "New Post", new_post_path %>
+          <%= link_to "New Post", '#', data: {toggle: "modal", target: '#myModal'} %>
           <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
       <% else %>
           <%= link_to "Sign In", new_user_session_path %>
@@ -26,6 +26,33 @@
       <% end %>
     </div>
   </div>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Add a post</h4>
+        </div>
+        <%= simple_form_for Post.new do |f| %>
+          <div class="modal-body">
+            <%= f.input :title %>
+            <%= f.input :message %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <%= f.submit "Add Post!", class: 'btn btn-primary' %>
+          </div>
+        <% end %> 
+        </div>
+      </div>
+  </div>
+<!-- </div> -->
+
+
+
+
   <br class="clear-fix" />
     <% if notice.present? %>
       <p class="notice"><%= notice %></p>

@@ -156,10 +156,12 @@ RSpec.describe PostsController, type: :controller do
 
       post :create, post: {title: 'Hello!',
         message: 'Really'}
-      expect(response).to redirect_to root_path
+    
+      expect(response).to redirect_to(post_path(assigns[:post]))
 
       post = Post.last
       expect(post.title).to eq("Hello!")
+      expect(post.message).to eq("Really")
       expect(post.user).to eq(user)
     end
 

@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.create(post_params.merge(user: current_user))
     if @post.valid?
-      redirect_to root_path
+      redirect_to post_path(@post)
     else
       render :new, status: :unprocessable_entity
     end

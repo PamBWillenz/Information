@@ -2,11 +2,11 @@
 
   <% @posts.each do |post| %>
   <div class="card">
-    <div class="handle"><%= link_to post.user.first_name, post_path(post) %></div>
+    <div class="handle"><%= link_to post.title, post_path(post) %></div>
     <h3>
-      <%= post.title %>
-      <br /><br />
       <%= post.message %>
+      <br /><br />
+      <%= post.user.first_name %>
     </h3>  
 
     <div class="post-actions pull-right">
